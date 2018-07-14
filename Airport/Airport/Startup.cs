@@ -29,9 +29,10 @@ namespace Airport
             });
             services.AddCors();
 
+     
+                services.AddDbContext<AirportDbContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("AirportDatabase")));
 
-            services.AddDbContext<AirportDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AirportDatabase")));
 
             services.AddSwaggerGen(c =>
             {
