@@ -1,0 +1,2 @@
+# AirportEF
+The airport serves flights of planes with designated flights. Date / departure time may be different from the departure time of the flight - for example, if the flight is delayed, then the departure time will be delayed. A plane and a crew are assigned to take off. The crew consists of a pilot (1) and a flight attendant (1 or more). Airplanes that belong to the airport have a lifetime depending on the type of aircraft and require timely maintenance.
