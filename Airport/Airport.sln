@@ -11,11 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airport.Infrastructure", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airport.Contract", "Airport.Contracts\Airport.Contract.csproj", "{224D13A9-56AF-4E32-AA58-CF4D13F6D705}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airport.Domain", "Airport.Domain\Airport.Domain.csproj", "{89AED380-E8F7-41F2-9E1E-A18D2B66EBCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airport.Domain", "Airport.Domain\Airport.Domain.csproj", "{89AED380-E8F7-41F2-9E1E-A18D2B66EBCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirPort.DataAccess", "AirPort.DataAccess\AirPort.DataAccess.csproj", "{4A5EF384-ADB2-414E-81B9-5C7DA95E3170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirPort.DataAccess", "AirPort.DataAccess\AirPort.DataAccess.csproj", "{4A5EF384-ADB2-414E-81B9-5C7DA95E3170}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airport.Implementation", "Airport.Implementation\Airport.Implementation.csproj", "{46BBB99E-A0D5-4C8C-8DE4-E62DDE8076C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airport.Implementation", "Airport.Implementation\Airport.Implementation.csproj", "{46BBB99E-A0D5-4C8C-8DE4-E62DDE8076C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airport.Tests", "Airport.Tests\Airport.Tests.csproj", "{186133C8-A846-4997-94FD-AE1DFD87D86D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{46BBB99E-A0D5-4C8C-8DE4-E62DDE8076C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46BBB99E-A0D5-4C8C-8DE4-E62DDE8076C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46BBB99E-A0D5-4C8C-8DE4-E62DDE8076C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{186133C8-A846-4997-94FD-AE1DFD87D86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{186133C8-A846-4997-94FD-AE1DFD87D86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{186133C8-A846-4997-94FD-AE1DFD87D86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{186133C8-A846-4997-94FD-AE1DFD87D86D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

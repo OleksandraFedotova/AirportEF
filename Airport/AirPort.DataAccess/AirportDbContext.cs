@@ -1,5 +1,6 @@
 ﻿using Airport.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Airport.DataAccess
 {
@@ -22,6 +23,19 @@ namespace Airport.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+        }
+    }
+
+    public class MockedDbContext
+    {
+        public static AirportDbContext Create()
+        {
+            DbContextOptions<AirportDbContext> options = new DbContextOptionsBuilder<AirportDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
+
+            var mockedContext = new AirportDbContext(options);
+
+            return mockedContext;
         }
     }
 }

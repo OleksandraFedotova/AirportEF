@@ -2,7 +2,6 @@
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace AirPort.DataAccess
 {
@@ -19,7 +18,10 @@ namespace AirPort.DataAccess
             builder.RegisterType<StewardessRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<TicketRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DepartureRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+        }
 
+        protected virtual void RegisterContext(ContainerBuilder builder)
+        {
             builder.Register(c =>
             {
                 var configuration = c.Resolve<IConfiguration>();
@@ -31,9 +33,14 @@ namespace AirPort.DataAccess
             });
 
             builder.RegisterType<AirportDbContext>().AsSelf().InstancePerLifetimeScope();
+        }
+    }
 
-
-
+    public class TestDataAccessModule : DataAccessModule
+    {
+        protected override void RegisterContext(ContainerBuilder builder)
+        {
+            builder.RegisterInstance(MockedDbContext.Create()).As<AirportDbContext>().InstancePerLifetimeScope();
         }
     }
 }

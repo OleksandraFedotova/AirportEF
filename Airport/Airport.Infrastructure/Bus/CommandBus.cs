@@ -17,6 +17,8 @@ namespace Infrastructure.Bus
 
         public async Task ExecuteAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
+            try
+            {
                 var handler = _container.ResolveOptional<ICommandHandler<TCommand>>();
                 if (handler == null)
                 {
@@ -24,6 +26,11 @@ namespace Infrastructure.Bus
                 }
 
                 await handler.ExecuteAsync(command);
+            }
+            catch(Exception e)
+            {
+
+            }
         }
     }
 }

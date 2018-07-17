@@ -64,11 +64,11 @@ namespace Airport.Web.Controllers
             var id = Guid.NewGuid();
 
             var command = new CreateTicketCommand
-            {
-                Id = id,
-                FlightNumber = model.FlightNumber,
-                Price = model.Price
-            };
+            (
+               id,
+               model.Price,
+               model.FlightNumber
+            );
 
             await _commandBus.ExecuteAsync(command);
 
