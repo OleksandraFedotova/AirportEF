@@ -1,8 +1,16 @@
 ﻿using Abstractions.Bus;
 using Airport.Contract.Command.Crew;
+using Airport.Contract.Command.Pilot;
+using Airport.Contract.Command.Stewardress;
 using Airport.Contract.Query.Crew;
+using Airport.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Airport.Web.Controllers
@@ -24,9 +32,67 @@ namespace Airport.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+
             var response = await _queryBus.RequestAsync<CrewsQuery, CrewsResponse>(new CrewsQuery());
 
             return Ok(response);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCrewsFromAPI()
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string json = await client.GetStringAsync("http://5b128555d50a5c0014ef1204.mockapi.io/crew");
+            List<TenCrewsModel> data = JsonConvert.DeserializeObject<List<TenCrewsModel>>(json);
+            List<TenCrewsModel> tenCrew = data.Where(c => c.Id < 11).ToList();
+
+            foreach (var crew in tenCrew)
+            {
+                var StewardessesId = new List<Guid>();
+                foreach (var stewardess in crew.Stewardess)
+                {
+                    var stewardessId = Guid.NewGuid();
+                    var c = new CreateStewardessCommand
+                    {
+                        Id = stewardessId,
+                        DateOfBirth = stewardess.BirthDate,
+                        FirstName = stewardess.FirstName,
+                        LastName = stewardess.LastName
+                    };
+                    await _commandBus.ExecuteAsync(c);
+
+                    StewardessesId.Add(stewardessId);
+                }
+                var pilot = crew.Pilot.First();
+                var pilotId = Guid.NewGuid();
+                var command = new CreatePilotCommand
+                {
+                    Id = pilotId,
+                    FirstName = pilot.FirstName,
+                    LastName = pilot.LastName,
+                    Experience = pilot.Exp,
+                    DateOfBirth = pilot.BirthDate
+                };
+
+                await _commandBus.ExecuteAsync(command);
+
+
+                var createCrewCommand = new CreateCrewCommand
+                {
+                    Id = Guid.NewGuid(),
+                    PilotId = pilotId,
+                    StewardressesId = StewardessesId
+                };
+
+                await _commandBus.ExecuteAsync(createCrewCommand);
+
+            }
+
+            return Ok(json);
         }
 
         [HttpGet("{id}")]
@@ -63,8 +129,8 @@ namespace Airport.Web.Controllers
             var command = new CreateCrewCommand
             {
                 Id = id,
-                StewardressesId=model.StewardessesId,
-                PilotId=model.PilotId
+                StewardressesId = model.StewardessesId,
+                PilotId = model.PilotId
 
             };
 
@@ -90,8 +156,8 @@ namespace Airport.Web.Controllers
 
             var command = new UpdateCrewCommand
             {
-               StewardressesId=model.StewardessesId,
-               PilotId=model.PilotId
+                StewardressesId = model.StewardessesId,
+                PilotId = model.PilotId
             };
 
             await _commandBus.ExecuteAsync(command);
