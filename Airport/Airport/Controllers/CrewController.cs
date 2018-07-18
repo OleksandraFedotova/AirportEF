@@ -50,9 +50,12 @@ namespace Airport.Web.Controllers
             List<TenCrewsModel> data = JsonConvert.DeserializeObject<List<TenCrewsModel>>(json);
             List<TenCrewsModel> tenCrew = data.Where(c => c.Id < 11).ToList();
 
+            //Changing int Id to Guid because my DB is working with them.
+            var crewTasks = new List<Task>();
             foreach (var crew in tenCrew)
             {
                 var StewardessesId = new List<Guid>();
+                var stTasks = new List<Task>();
                 foreach (var stewardess in crew.Stewardess)
                 {
                     var stewardessId = Guid.NewGuid();
@@ -63,10 +66,11 @@ namespace Airport.Web.Controllers
                         FirstName = stewardess.FirstName,
                         LastName = stewardess.LastName
                     };
-                    await _commandBus.ExecuteAsync(c);
+                    stTasks.Add(_commandBus.ExecuteAsync(c));
 
                     StewardessesId.Add(stewardessId);
                 }
+                await Task.WhenAll(stTasks);
                 var pilot = crew.Pilot.First();
                 var pilotId = Guid.NewGuid();
                 var command = new CreatePilotCommand
@@ -88,9 +92,11 @@ namespace Airport.Web.Controllers
                     StewardressesId = StewardessesId
                 };
 
-                await _commandBus.ExecuteAsync(createCrewCommand);
+                crewTasks.Add(_commandBus.ExecuteAsync(createCrewCommand));
 
             }
+
+            await Task.WhenAll(crewTasks);
 
             return Ok(json);
         }
