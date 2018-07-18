@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -39,9 +40,13 @@ namespace Airport.Web.Controllers
         }
 
         [HttpGet]
+        [ActionName("get10")]
+        [Route("get10")]
         public async Task<IActionResult> GetCrewsFromAPI()
         {
             var client = new HttpClient();
+            var fileName = DateTime.UtcNow + "_log_date_time.csv";
+
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -95,11 +100,29 @@ namespace Airport.Web.Controllers
                 crewTasks.Add(_commandBus.ExecuteAsync(createCrewCommand));
 
             }
-
+            crewTasks.Add(LogCrews(tenCrew, Path.Combine(Environment.CurrentDirectory, @"Logs\", fileName)));
             await Task.WhenAll(crewTasks);
 
             return Ok(json);
         }
+
+        private async Task LogCrews(List<TenCrewsModel> list, string path)
+        {
+            using (var w = new StreamWriter(path))
+            {
+                await w.WriteLineAsync("id,pilot,stewardess");
+                foreach (var row in list)
+                {
+                    var id = row.Id;
+                    var pilot = JsonConvert.SerializeObject(row.Pilot.FirstOrDefault());
+                    var stewardesses = JsonConvert.SerializeObject(row.Stewardess);
+                    var line = string.Format("{0},\"{1}\",\"{2}\"", id, pilot, stewardesses);
+                    await w.WriteLineAsync(line);
+                    w.Flush();
+                }
+            }
+        }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
