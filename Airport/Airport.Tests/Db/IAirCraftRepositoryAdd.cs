@@ -47,7 +47,7 @@ namespace Airport.Tests.Db
         [TearDown]
         public async Task Clear()
         {
-            var repo = Resolve<IAirCraftTypeRepository>();
+            var repo = Resolve<IAirCraftRepository>();
 
             await repo.Delete(_id);
         }
