@@ -9,6 +9,7 @@ namespace AirPort.DataAccess
     {
         protected override void Load(ContainerBuilder builder)
         {
+            RegisterContext(builder);
 
             builder.RegisterType<FlightRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CrewRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -40,7 +41,7 @@ namespace AirPort.DataAccess
     {
         protected override void RegisterContext(ContainerBuilder builder)
         {
-            builder.RegisterInstance(MockedDbContext.Create()).As<AirportDbContext>().InstancePerLifetimeScope();
+            builder.Register(c=>MockedDbContext.Create()).As<AirportDbContext>().InstancePerLifetimeScope();
         }
     }
 }

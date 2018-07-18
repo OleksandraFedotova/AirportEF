@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using Abstractions.Bus;
 using Abstractions.CQRS;
 using Airport.Implementation;
 using AirPort.DataAccess;
 using Autofac;
 using Infrastructure;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace Tests
@@ -28,9 +30,16 @@ namespace Tests
         {
             var builder = new ContainerBuilder();
 
+            var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().LastIndexOf("\\bin\\Debug\\netcoreapp2.0")))
+                .AddJsonFile("appsettings.json");
+
+            builder.RegisterInstance(configBuilder.Build()).As<IConfiguration>();
+
             builder.RegisterModule<InfrastructureModule>();
             builder.RegisterModule<ImplementationModule>();
             builder.RegisterModule<TestDataAccessModule>();
+            builder.RegisterModule<DataAccessModule>();
 
             _container = builder.Build();
 

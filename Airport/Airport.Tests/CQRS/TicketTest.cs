@@ -14,14 +14,6 @@ namespace Airport.Tests.CQRS
 
         protected override void Given()
         {
-            var context = Resolve<AirportDbContext>();
-
-            context.Tickets.Add(new Ticket
-            {
-                Id = _ticketId
-            });
-
-            context.SaveChanges();
         }
 
         protected override void When()
