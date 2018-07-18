@@ -50,7 +50,7 @@ namespace Airport.Tests.Db
         [TearDown]
         public async Task Clear()
         {
-            var repo = Resolve<IFlighRtTypeRepository>();
+            var repo = Resolve<IFlightRepository>();
 
             await repo.Delete(_id);
         }
