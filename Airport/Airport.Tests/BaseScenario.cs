@@ -30,12 +30,6 @@ namespace Tests
         {
             var builder = new ContainerBuilder();
 
-            var configBuilder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().LastIndexOf("\\bin\\Debug\\netcoreapp2.0")))
-                .AddJsonFile("appsettings.json");
-
-            builder.RegisterInstance(configBuilder.Build()).As<IConfiguration>();
-
             builder.RegisterModule<InfrastructureModule>();
             builder.RegisterModule<ImplementationModule>();
             builder.RegisterModule<TestDataAccessModule>();

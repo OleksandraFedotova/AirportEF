@@ -31,7 +31,7 @@ namespace Airport.Implementation.Hendlers.Command
             var crew = new Domain.Entities.Crew
             {
                 Id = command.Id,
-                Pilot = _pilotRepository.GetById(command.PilotId).Result,
+                Pilot = await _pilotRepository.GetById(command.PilotId),
                 Stewardesses = _stewardessRepository.GetAll().Where(y => command.StewardressesId.Contains(y.Id))
             };
 

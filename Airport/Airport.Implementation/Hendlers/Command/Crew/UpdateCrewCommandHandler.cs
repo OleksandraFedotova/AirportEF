@@ -29,7 +29,7 @@ namespace Airport.Implementation.Hendlers.Command
                 throw new Exception("Crew with this Id does not exist");
             }
 
-            crew.Pilot = _pilotRepository.GetById(command.PilotId).Result;
+            crew.Pilot = await _pilotRepository.GetById(command.PilotId);
             crew.Stewardesses = _stewardessRepository.GetAll().Where(y => command.StewardressesId.Contains(y.Id));
 
             await _crewRepository.Update(crew);

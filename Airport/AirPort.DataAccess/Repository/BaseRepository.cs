@@ -11,7 +11,7 @@ namespace AirPort.DataAccess
     public abstract class BaseRepository<TEntity> : IRepository<TEntity> 
         where TEntity : class, IEntity
     {
-        private readonly AirportDbContext _dbContext;
+        protected readonly AirportDbContext _dbContext;
 
         public BaseRepository(AirportDbContext dbContext)
         {
