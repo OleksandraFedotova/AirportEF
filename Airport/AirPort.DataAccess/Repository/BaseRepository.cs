@@ -43,7 +43,8 @@ namespace AirPort.DataAccess
 
         public async Task Delete(Guid Id)
         {
-            var entity = await GetById(Id);
+            //var entity = await GetById(Id);
+            var entity = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == Id);
             _dbContext.Set<TEntity>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }

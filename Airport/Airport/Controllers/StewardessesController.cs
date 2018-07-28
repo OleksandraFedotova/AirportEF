@@ -88,6 +88,7 @@ namespace Airport.Web.Controllers
 
             var command = new UpdateStewardressCommand
             {
+                Id=model.Id,
                 DateOfBirth = model.DateOfBirth,
                 FirstName = model.FirstName,
                 LastName = model.LastName
