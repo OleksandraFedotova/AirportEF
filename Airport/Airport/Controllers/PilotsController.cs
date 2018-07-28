@@ -80,7 +80,7 @@ namespace Airport.Web.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromBody]UpdatePilotModel model)
         {
-            var userToUpdate = _queryBus.RequestAsync<PilotByIdQuery, PilotByIdResponse>(new PilotByIdQuery { PilotId = model.PilotId });
+            var userToUpdate = await _queryBus.RequestAsync<PilotByIdQuery, PilotByIdResponse>(new PilotByIdQuery { PilotId = model.PilotId });
             if (userToUpdate == null||model==null)
             {
                 return BadRequest();
@@ -93,6 +93,7 @@ namespace Airport.Web.Controllers
 
             var command = new UpdatePilotCommand
             {
+                Id=model.PilotId,
                 DateOfBirth = model.DateOfBirth,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -108,7 +109,7 @@ namespace Airport.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var model = _queryBus.RequestAsync<PilotByIdQuery,PilotByIdResponse>(new PilotByIdQuery { PilotId=id});
+            var model = await _queryBus.RequestAsync<PilotByIdQuery,PilotByIdResponse>(new PilotByIdQuery { PilotId=id});
             if (model == null)
             {
                 return BadRequest();

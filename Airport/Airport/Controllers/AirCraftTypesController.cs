@@ -81,7 +81,7 @@ namespace Airport.Web.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromBody]UpdateAirCraftTypeModel model)
         {
-            var userToUpdate = _queryBus.RequestAsync<AirCraftTypeByIdQuery, AirCraftTypeByIdResponse>(new AirCraftTypeByIdQuery { AirCraftTypeId = model.AirCraftTypeId });
+            var userToUpdate = await _queryBus.RequestAsync<AirCraftTypeByIdQuery, AirCraftTypeByIdResponse>(new AirCraftTypeByIdQuery { AirCraftTypeId = model.AirCraftTypeId });
             if (userToUpdate == null || model == null)
             {
                 return BadRequest();
@@ -94,6 +94,7 @@ namespace Airport.Web.Controllers
 
             var command = new UpdateAirCraftTypeCommand
             {
+                AirCraftTypeId=model.AirCraftTypeId,
                 LoadCapacity = model.LoadCapacity,
                 Model = model.Model,
                 Seats = model.Seats
@@ -108,7 +109,7 @@ namespace Airport.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var model = _queryBus.RequestAsync<AirCraftTypeByIdQuery, AirCraftTypeByIdResponse>(new AirCraftTypeByIdQuery { AirCraftTypeId = id });
+            var model = await _queryBus.RequestAsync<AirCraftTypeByIdQuery, AirCraftTypeByIdResponse>(new AirCraftTypeByIdQuery { AirCraftTypeId = id });
             if (model == null)
             {
                 return BadRequest();

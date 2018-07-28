@@ -11,9 +11,9 @@ namespace Airport.Contract.Query.Stewardess
         public class Stewardess
         {
             public Guid Id { get; private set; }
-            string FirstName { get; set; }
-            string LastName { get; set; }
-            DateTime DateOfBirth { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public DateTime DateOfBirth { get; set; }
         }
     }
 }

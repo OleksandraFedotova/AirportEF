@@ -6,9 +6,9 @@ namespace Airport.Contract.Query.Pilot
     public class PilotByIdResponse : IResponse
     {
         public Guid Id { get; private set; }
-        string FirstName { get; set; }
-        string LastName { get; set; }
-        DateTime DateOfBirth { get; set; }
-        int Experience { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public int Experience { get; set; }
     }
 }

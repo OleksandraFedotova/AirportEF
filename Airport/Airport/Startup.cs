@@ -1,5 +1,6 @@
 using Airport.DataAccess;
 using Airport.Implementation;
+using Airport.Web;
 using AirPort.DataAccess;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -33,6 +34,13 @@ namespace Airport
                 services.AddDbContext<AirportDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("AirportDatabase")));
 
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy",
+                    b=> b.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -78,8 +86,9 @@ namespace Airport
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-   
+            app.UseCorsMiddleware();
             app.UseMvc();
+            app.UseCors("CorsPolicy");
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Airport.Implementation
     {
         public ImplementationProfile()
         {
-            CreateMap<Airport.Domain.Entities.Pilot, PilotByIdResponse>();
+            CreateMap<Airport.Domain.Entities.Pilot, PilotByIdResponse>();        
             CreateMap<Airport.Domain.Entities.Stewardess, StewardessByIdResponse>();
             CreateMap<Airport.Domain.Entities.AirCraft, AirCraftByIdResponse>();
             CreateMap<Airport.Domain.Entities.AirCraftType, AirCraftTypeByIdResponse>();

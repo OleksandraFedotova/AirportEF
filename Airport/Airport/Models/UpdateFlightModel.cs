@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Airport.Web.Controllers
 {
     public class UpdateFlightModel
     {
+        [JsonProperty("id")]
         public Guid FlightId { get; set; }
         public int Number { get; set; }
         public string DeparturePoint { get; set; }
