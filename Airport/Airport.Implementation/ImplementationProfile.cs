@@ -1,4 +1,5 @@
-﻿using Airport.Contract.Command.AirCraft;
+﻿using System.Collections.Generic;
+using Airport.Contract.Command.AirCraft;
 using Airport.Contract.Command.AirCraftType;
 using Airport.Contract.Command.Crew;
 using Airport.Contract.Command.Departure;
@@ -39,7 +40,7 @@ namespace Airport.Implementation
             CreateMap<Airport.Domain.Entities.Ticket, TicketsResponse.Ticket>();
             CreateMap<Airport.Domain.Entities.Flight, FlightsResponse.Flight>();
             CreateMap<Airport.Domain.Entities.Crew, CrewsResponse.Crew>();
-
+            
             CreateMap<CreatePilotCommand, Airport.Domain.Entities.Pilot>();
             CreateMap<CreateStewardessCommand, Airport.Domain.Entities.Stewardess>();
             CreateMap<CreateAirCraftCommand, Airport.Domain.Entities.AirCraft>().ForMember(x => x.AirCraftType, y => y.Ignore());

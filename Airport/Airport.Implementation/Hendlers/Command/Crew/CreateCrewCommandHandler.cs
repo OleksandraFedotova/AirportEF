@@ -5,6 +5,7 @@ using AirPort.DataAccess;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airport.Implementation.Hendlers.Command
 {
@@ -32,7 +33,7 @@ namespace Airport.Implementation.Hendlers.Command
             {
                 Id = command.Id,
                 Pilot = await _pilotRepository.GetById(command.PilotId),
-                Stewardesses = _stewardessRepository.GetAll().Where(y => command.StewardressesId.Contains(y.Id))
+                Stewardesses = await _stewardessRepository.GetAll().Where(y => command.StewardressesId.Contains(y.Id)).ToListAsync()
             };
 
             await _crewRepository.Create(crew);

@@ -26,7 +26,7 @@ namespace AirPort.DataAccess
 
         public IQueryable<TEntity> GetAll()
         {
-            return _dbContext.Set<TEntity>().AsNoTracking();
+            return _dbContext.Set<TEntity>();
         }
 
         public async Task Create(TEntity entity)
@@ -52,7 +52,6 @@ namespace AirPort.DataAccess
         public async Task<TEntity> GetById(Guid id)
         {
             return await _dbContext.Set<TEntity>()
-                        .AsNoTracking()
                         .FirstOrDefaultAsync(e => e.Id == id);
         }
     }

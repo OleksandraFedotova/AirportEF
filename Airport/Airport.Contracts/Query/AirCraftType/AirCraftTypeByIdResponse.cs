@@ -7,7 +7,7 @@ namespace Airport.Contract.Query.AirCraftType
     {
         public Guid Id { get; private set; }
         public string Model { get; set; }
-        public int Places { get; set; }
+        public int Seats { get; set; }
         public int LoadCapacity { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace Airport.Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        public IEnumerable<Stewardess> Stewardesses { get; set; }
+        public ICollection<Stewardess> Stewardesses { get; set; }
         public Pilot Pilot { get; set; }
     }
 }
